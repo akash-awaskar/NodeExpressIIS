@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NodeExpress IIS — Binatech Solutions</title>
+<style>
+  :root{
+    --primary:#1F90DF; --primary2:#35A8EB; --bg:#F4F7FB; --card:#FFFFFF;
+    --text:#2B2F36; --muted:#757880; --border:#D5DFED;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--text);line-height:1.65}
+  .container{max-width:960px;margin:0 auto;padding:0 20px}
+  header{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:48px 0 40px}
+  header .container{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  header img{height:64px}
+  header h1{font-size:2.2rem;font-weight:600;letter-spacing:.3px}
+  header p{opacity:.93;margin-top:6px;font-size:1.05rem}
+  .badges{margin-top:12px}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);
+         color:#fff;border-radius:20px;padding:3px 14px;font-size:.8rem;margin:2px 4px 2px 0}
+  nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;
+      box-shadow:0 1px 4px rgba(31,144,223,.05)}
+  nav .container{display:flex;flex-wrap:wrap;padding:6px 20px}
+  nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:6px;font-size:.92rem}
+  nav a:hover{background:#EEF4FB;color:var(--primary)}
+  section{padding:34px 0 6px}
+  h2{color:var(--primary);font-size:1.45rem;margin-bottom:14px;border-left:4px solid var(--primary2);
+     padding-left:12px}
+  h3{color:var(--text);font-size:1.08rem;margin:18px 0 8px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;
+        box-shadow:0 1px 3px rgba(31,144,223,.06);margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .feature{border:1px solid var(--border);border-radius:10px;padding:18px;background:#fff}
+  .feature h3{margin:0 0 6px;color:var(--primary)}
+  .feature p{font-size:.94rem;color:var(--muted);margin:0}
+  ul{margin:8px 0 8px 22px}
+  li{margin:4px 0}
+  code{font-family:Consolas,'Courier New',monospace;background:#EEF4FB;color:#155A8A;
+       padding:1px 6px;border-radius:4px;font-size:.9em}
+  pre{background:#1E2430;color:#E6EDF3;padding:16px;border-radius:8px;overflow-x:auto;margin:12px 0}
+  pre code{background:transparent;color:inherit;padding:0}
+  table{width:100%;border-collapse:collapse;margin:12px 0}
+  th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;font-size:.94rem}
+  th{background:#EEF4FB;color:var(--primary)}
+  .btn{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;
+       padding:12px 26px;border-radius:8px;text-decoration:none;font-weight:600;margin:4px 8px 4px 0}
+  .btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary)}
+  .btn-outline:hover{background:#EEF4FB}
+  .contact-bar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  footer{background:#232A35;color:#AEB6C2;padding:32px 0;margin-top:48px;font-size:.92rem}
+  footer a{color:var(--primary2);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .note{border-left:4px solid #F0AD4E;background:#FFF8E6;padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0}
+  @media (max-width:600px){
+    header h1{font-size:1.55rem}
+    header img{height:48px}
+    nav a{padding:6px 8px;font-size:.85rem}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <img src="assets/logo.png" alt="NodeExpress IIS logo">
+    <div>
+      <h1>NodeExpress IIS</h1>
+      <p>Publish, deploy and recover Node.js / React / Angular / Next.js projects on Windows Server — powered by PM2 and IIS.</p>
+      <div class="badges">
+        <span class="badge">Windows</span>
+        <span class="badge">.NET Framework 4.7.2</span>
+        <span class="badge">PM2 + IIS</span>
+        <span class="badge">By Binatech Solutions</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="#overview">Overview</a>
+    <a href="#features">Features</a>
+    <a href="#prerequisites">Prerequisites</a>
+    <a href="#installation">Installation</a>
+    <a href="#usage">Usage</a>
+    <a href="#troubleshooting">Troubleshooting</a>
+    <a href="#uninstall">Uninstall</a>
+    <a href="#about">About Us</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<section id="overview">
+  <h2>Overview</h2>
+  <div class="card">
+    <p>NodeExpress IIS is a Windows desktop tool that moves web projects from a development PC to a Windows Server and keeps them running:</p>
+    <ul>
+      <li><strong>Publish Project</strong> — builds your Node / React / Angular / Next / Nuxt project on the dev PC and prepares a publish folder with a <code>publish-info.json</code> manifest.</li>
+      <li><strong>Deploy Project</strong> — on the server, it finds a free port, runs server apps under <strong>PM2</strong>, serves static builds directly through <strong>IIS</strong>, and sets up an IIS <strong>URL Rewrite reverse proxy</strong> automatically.</li>
+      <li><strong>Recover</strong> — after a server reboot it restores all PM2 apps (<code>pm2 resurrect</code>), enables <code>pm2-windows-startup</code>, enables ARR proxy, starts all IIS sites and restarts IIS.</li>
+    </ul>
+    <div class="note"><strong>License:</strong> the tool signs in with your Binatech Solutions account (email + password). The licensing service must be reachable at <code>http://localhost:3000</code> on the machine where the tool runs.</div>
+  </div>
+</section>
+
+<section id="features">
+  <h2>Features</h2>
+  <div class="grid">
+    <div class="feature"><h3>Three modes</h3><p>Publish, Deploy and Recover — one tool for the whole delivery pipeline.</p></div>
+    <div class="feature"><h3>Free-port detection</h3><p>Automatically finds a free port on the server; optionally set or change the IIS front-end port.</p></div>
+    <div class="feature"><h3>PM2 process management</h3><p>Server-side apps run under PM2 with strict online + port verification before the deploy is accepted.</p></div>
+    <div class="feature"><h3>IIS reverse proxy</h3><p>IIS URL Rewrite rules and <code>web.config</code> are created automatically — no manual IIS configuration.</p></div>
+    <div class="feature"><h3>Reboot recovery</h3><p>One click restores PM2 apps and IIS sites after a server reboot.</p></div>
+    <div class="feature"><h3>Timestamped logs</h3><p>Every run writes a detailed log file in the <code>logs</code> folder next to the tool.</p></div>
+    <div class="feature"><h3>Framework detection</h3><p>Detects Node, React, Angular, Next and Nuxt projects from <code>package.json</code> automatically.</p></div>
+    <div class="feature"><h3>Modern UI</h3><p>Clean, card-based interface with splash screen, about and how-to-use dialogs.</p></div>
+  </div>
+</section>
+
+<section id="prerequisites">
+  <h2>Prerequisites</h2>
+  <div class="grid">
+    <div class="card" style="margin:0">
+      <h3>Development PC</h3>
+      <ul>
+        <li>Windows 10 / 11 or Windows Server</li>
+        <li>.NET Framework <strong>4.7.2</strong> (the installer checks and prompts if missing)</li>
+        <li>Node.js + npm (for the project you publish)</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0">
+      <h3>Windows Server (target)</h3>
+      <ul>
+        <li>Windows Server 2016 or later</li>
+        <li>.NET Framework 4.7.2</li>
+        <li>Node.js + npm</li>
+        <li>IIS with the <strong>URL Rewrite</strong> and <strong>Application Request Routing (ARR)</strong> modules</li>
+        <li>PM2 (<code>npm install -g pm2</code>)</li>
+        <li>The NodeExpress licensing service running on <code>localhost:3000</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="installation">
+  <h2>Installation</h2>
+  <div class="card">
+    <ol>
+      <li>Download <code>NodeExpressIIS.msi</code> (or the setup file from your Binatech Solutions contact).</li>
+      <li>Run the installer. The default installation folder is <code>C:\Program Files\NodeExpress IIS</code>.</li>
+      <li>The installer checks for .NET Framework 4.7.2 and stops with a clear message if it is missing — install .NET Framework 4.7.2 and run the MSI again.</li>
+      <li>Finish the wizard. A <strong>NodeExpress IIS</strong> entry is added to the Start Menu, with an uninstall shortcut.</li>
+    </ol>
+    <div class="note"><strong>Run the tool as Administrator</strong> — Deploy and Recover modify PM2, IIS and URL Rewrite, which require elevated rights.</div>
+  </div>
+</section>
+
+<section id="usage">
+  <h2>Usage</h2>
+  <div class="card">
+    <h3>1. Sign in</h3>
+    <p>Launch NodeExpress IIS from the Start Menu and sign in with your Binatech Solutions email and password. Use <em>Remember me</em> to skip the sign-in next time (the tool stores a small flag file next to the executable, so keep the install folder writable or run the tool as Administrator).</p>
+    <h3>2. Publish (dev PC)</h3>
+    <ol>
+      <li>Choose <strong>Publish Project</strong>.</li>
+      <li>Enter your project path and a publish folder.</li>
+      <li>The tool installs missing dependencies if needed, runs <code>npm run build</code>, and writes the publish folder with <code>publish-info.json</code>.</li>
+      <li>Copy the publish folder to your Windows Server.</li>
+    </ol>
+    <h3>3. Deploy (server)</h3>
+    <ol>
+      <li>Choose <strong>Deploy Project</strong> (run as Administrator).</li>
+      <li>Enter the published folder path and the IIS site name (created in IIS beforehand).</li>
+      <li>The tool picks a free port: static builds are served by IIS directly; server apps run under PM2 and the IIS site reverse-proxies to them.</li>
+      <li>Optionally set or change the IIS front-end port.</li>
+    </ol>
+    <h3>4. Recover (server, after a reboot)</h3>
+    <ol>
+      <li>Choose <strong>Recover</strong> (run as Administrator).</li>
+      <li>PM2 apps are restored, <code>pm2-windows-startup</code> is installed if missing, ARR proxy is enabled, and all IIS sites are started.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="troubleshooting">
+  <h2>Troubleshooting</h2>
+  <div class="card">
+    <table>
+      <tr><th>Problem</th><th>Solution</th></tr>
+      <tr><td>“Cannot connect to the API at http://localhost:3000”</td><td>The licensing service is not running on this machine. Start it and sign in again.</td></tr>
+      <tr><td>“Invalid email or password”</td><td>Check your Binatech Solutions credentials. Contact us if your license has expired.</td></tr>
+      <tr><td>“License expires in X days” (orange warning)</td><td>Your license is expiring soon — click Login again to continue, and contact Binatech Solutions to renew.</td></tr>
+      <tr><td>“Expired. Please contact Binatech Solutions.”</td><td>The license has expired — contact us for a renewal.</td></tr>
+      <tr><td>Deploy fails with port errors</td><td>Another app is using the port. The tool normally picks a free port automatically — check the log in the <code>logs</code> folder.</td></tr>
+      <tr><td>Deploy/Recover does nothing</td><td>Run the tool as Administrator (right-click → Run as administrator).</td></tr>
+      <tr><td>IIS site returns 502 / does not proxy</td><td>Make sure the URL Rewrite and ARR modules are installed in IIS, then use <strong>Recover</strong>.</td></tr>
+      <tr><td>PM2 app not listed after reboot</td><td>Use <strong>Recover</strong> — it installs <code>pm2-windows-startup</code> so apps survive future reboots.</td></tr>
+      <tr><td>SmartScreen / antivirus prompt on first run</td><td>The file is unsigned. Click <em>More info → Run anyway</em>. See the README for code-signing information.</td></tr>
+    </table>
+    <p style="margin-top:12px">Detailed per-run logs are written to <code>logs\</code> next to the executable — attach them when contacting support.</p>
+  </div>
+</section>
+
+<section id="uninstall">
+  <h2>Uninstall</h2>
+  <div class="card">
+    <p>Open <strong>Settings → Apps → Apps &amp; features</strong> (or Control Panel → Programs and Features), select <strong>NodeExpress IIS</strong>, and choose <strong>Uninstall</strong>. An uninstall shortcut is also available in the Start Menu under <em>Binatech Solutions → NodeExpress IIS</em>.</p>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <div class="card">
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+      <img src="assets/about_us.png" alt="Binatech Solutions" style="max-width:280px;border-radius:10px;border:1px solid var(--border)">
+      <div style="flex:1;min-width:260px">
+        <h3 style="margin-top:0">Binatech Solutions</h3>
+        <p>Binatech Solutions builds deployment and DevOps tooling for Windows servers. NodeExpress IIS is our one-stop tool for publishing and operating Node.js, React, Angular and Next.js applications on IIS with PM2.</p>
+        <div class="contact-bar">
+          <a class="btn" href="mailto:binatechsolution@gmail.com">Contact us — binatechsolution@gmail.com</a>
+          <a class="btn btn-outline" href="https://binatechs.in/contact" target="_blank" rel="noopener">binatechs.in/contact</a>
+          <a class="btn btn-outline" href="https://github.com/akash-awaskar/NodeExpressIIS" target="_blank" rel="noopener">GitHub — NodeExpressIIS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Binatech Solutions — NodeExpress IIS. All rights reserved.</p>
+    <p style="margin-top:6px">
+      <a href="mailto:binatechsolution@gmail.com">binatechsolution@gmail.com</a> &nbsp;·&nbsp;
+      <a href="https://binatechs.in/contact">binatechs.in/contact</a> &nbsp;·&nbsp;
+      <a href="https://github.com/akash-awaskar/NodeExpressIIS" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
